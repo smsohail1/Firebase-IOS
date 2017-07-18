@@ -8,11 +8,19 @@
 
 import UIKit
 
+//importing firebase
+import Firebase
+
 class ViewController: UIViewController {
 
+    
+    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var userpassword: UITextField!
+    @IBOutlet weak var status: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        FirebaseApp.configure()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +29,18 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func Register(_ sender: UIButton) {
+        let userName = username.text;
+        let password = userpassword.text;
+        Auth.auth().createUser(withEmail: userName!, password: password!, completion: { (user: User?, error) in
+            if error == nil {
+                self.status.text = "You are successfully registered"
+            }else{
+                self.status.text = "Registration Failed.. Please Try Again"
+            }
+            
+        })
+        
+    }
 }
 
